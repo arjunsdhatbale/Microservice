@@ -1,0 +1,42 @@
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: student-service
+          uri: lb://STUDENT-SERVICE
+          predicates:
+            - Path=/student/**
+          filters:
+            - name: StripPrefix
+              args:
+                parts: 1
+            - name: AddRequestHeader
+              args:
+                name: X-Student-Gateway
+                value: Active
+        - id: teacher-service
+          uri: lb://TEACHER-SERVICE
+          predicates:
+            - Path=/teacher/**
+          filters:
+            - name: StripPrefix
+              args:
+                parts: 1
+            - name: AddRequestHeader
+              args:
+                name: X-Teacher-Gateway
+                value: Active
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+server:
+  port: 8080
