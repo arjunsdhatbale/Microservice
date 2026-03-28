@@ -1,19 +1,19 @@
-#mvn spring-boot:run -Dspring-boot.run.profiles=microservice
-spring:
-  config:
-    activate:
-      on-profile: microservice  
-  application:
-    name: STUDENT-SERVICE
-
-server:
-  port: 8082
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: true
+##mvn spring-boot:run -Dspring-boot.run.profiles=microservice
+#spring:
+#  config:
+#    activate:
+#      on-profile: microservice
+#  application:
+#    name: STUDENT-SERVICE
+#
+#server:
+#  port: 8082
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#    register-with-eureka: true
+#    fetch-registry: true
+#  instance:
+#    prefer-ip-address: true
