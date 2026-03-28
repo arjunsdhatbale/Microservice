@@ -1,10 +1,10 @@
-package com.main;
+package com.main.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
- import org.springframework.beans.factory.annotation.Autowired;
+import com.main.feign.StudentInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,29 +12,28 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import com.main.Student.StudentMaster;
 
 @RestController
+@RequestMapping("/teacher")
 public class TeacherController {
 
 	@Autowired
-	private RestTemplate restTemplate; 
+	private RestTemplate restTemplate;
+
+    @Autowired
+    StudentInterface studentInterface;
 
 	@GetMapping("/hello")
-	public String hello(@RequestHeader(value = "X-Teacher-Gateway", required = false) String header) {
-		return "hello Teacher is here..." + "  header : " + header ;
+	public String hello() {
+		return "I am from Teacher service." ;
 	}
 	
 	
-	List<TeacherMaster> list = new ArrayList<>(); 
+	List<TeacherMaster> list = new ArrayList<>();
 	
 	
 	@PostMapping("/")
@@ -86,7 +85,11 @@ public class TeacherController {
 		return ResponseEntity.ok(list);
 	}
 	
-	
+    @GetMapping("/get-home")
+    public String fetchHomeFromStudent(){
+
+        return this.studentInterface.getHello();
+    }
 	
 	
 	
